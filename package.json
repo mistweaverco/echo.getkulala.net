@@ -1,13 +1,19 @@
 {
   "name": "echo.getkulala.net",
   "scripts": {
+    "build": "bun build src/index.ts --outdir=dist",
+    "start": "bun run .",
     "dev": "bun run --hot src/index.ts"
   },
+  "main": "dist/index.js",
   "dependencies": {
     "hono": "^4.7.7"
   },
   "devDependencies": {
+    "@hono/swagger-ui": "0.5.1",
+    "@hono/zod-openapi": "0.19.5",
     "@types/bun": "latest",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "zod": "3.24.3"
   }
 }
