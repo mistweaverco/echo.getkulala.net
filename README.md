@@ -7,7 +7,7 @@ A httpbin.org clone using bun.sh and hono.dev.
 ```bash
 docker run -d \
   --name echo \
-  --restart always \
+  --restart=always \
   -e PORT=3002 \
   -p 3002:3002 \
   pull.docker.build/kulala/echo
