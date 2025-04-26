@@ -1,4 +1,4 @@
-import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { getConnInfo } from "hono/bun";
 import { getDefaultResponseBody, getDefaultRoute } from "./../utils";
 
@@ -6,6 +6,8 @@ const rootRouter = new OpenAPIHono();
 
 rootRouter.openapi(
   getDefaultRoute({
+    tags: ["HTTP Methods"],
+    summary: "The request's POST parameters",
     path: "/post",
     method: "post",
     requestDescription: "post various data to the server",
@@ -18,6 +20,8 @@ rootRouter.openapi(
 
 rootRouter.openapi(
   getDefaultRoute({
+    tags: ["HTTP Methods"],
+    summary: "The request's GET parameters",
     path: "/get",
     method: "get",
     requestDescription: "get various data from the server",
@@ -30,6 +34,8 @@ rootRouter.openapi(
 
 rootRouter.openapi(
   getDefaultRoute({
+    tags: ["HTTP Methods"],
+    summary: "The request's PUT parameters",
     path: "/put",
     method: "put",
     requestDescription: "put various data to the server",
@@ -42,6 +48,8 @@ rootRouter.openapi(
 
 rootRouter.openapi(
   getDefaultRoute({
+    tags: ["HTTP Methods"],
+    summary: "The request's DELETE parameters",
     path: "/delete",
     method: "delete",
     requestDescription: "delete various data from the server",
@@ -54,6 +62,8 @@ rootRouter.openapi(
 
 rootRouter.openapi(
   getDefaultRoute({
+    tags: ["HTTP Methods"],
+    summary: "The request's PATCH parameters",
     path: "/patch",
     method: "patch",
     requestDescription: "patch various data to the server",

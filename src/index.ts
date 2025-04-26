@@ -12,19 +12,25 @@ app.get(
   swaggerUI({
     title: "echo",
     deepLinking: true,
-    url: "/doc",
+    url: "/openapi.json",
   }),
 );
 app.route("/", rootRouter);
 app.route("/auth", authRouter);
 app.route("/image", imageRouter);
 app.route("/status", statusRouter);
-app.doc("/doc", {
+app.doc("/openapi.json", {
   openapi: "3.0.0",
   info: {
     version: "1.0.0",
     title: "echo",
   },
+  tags: [
+    {
+      name: "HTTP Methods",
+      description: "Testing different HTTP methods",
+    },
+  ],
 });
 
 export default {
