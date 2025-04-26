@@ -1,5 +1,75 @@
 import { Context } from "hono";
+import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
 import { ContentfulStatusCode } from "hono/utils/http-status";
+
+const router = new OpenAPIHono();
+
+interface GetDefaultRouteParams {
+  method: string;
+  path: string;
+  requestDescription: string;
+  responseDescription: string;
+}
+
+export const getDefaultRoute = (opts: GetDefaultRouteParams) => {
+  return createRoute({
+    method: opts.method,
+    path: opts.path,
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+            },
+          },
+          "text/plain": {
+            schema: {
+              type: "string",
+              default: "hello echo",
+            },
+          },
+          "multipart/form-data": {
+            schema: {
+              type: "object",
+              default: {
+                key1: "value1",
+                key2: "value2",
+              },
+            },
+          },
+          "application/x-www-form-urlencoded": {
+            schema: {
+              type: "object",
+              default: {
+                key1: "value1",
+                key2: "value2",
+              },
+            },
+          },
+        },
+        description: opts.requestDescription,
+        required: false,
+      },
+    },
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: {},
+          },
+          "text/html": {
+            schema: {},
+          },
+          "text/plain": {
+            schema: {},
+          },
+        },
+        description: opts.responseDescription,
+      },
+    },
+  });
+};
 
 export const getDefaultResponseBody = async (
   c: Context,

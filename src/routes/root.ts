@@ -1,88 +1,70 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
 import { getConnInfo } from "hono/bun";
-import { getDefaultResponseBody } from "./../utils";
+import { getDefaultResponseBody, getDefaultRoute } from "./../utils";
 
 const rootRouter = new OpenAPIHono();
 
-const postRoute = createRoute({
-  method: "post",
-  path: "/post",
-  request: {
-    body: {
-      content: {
-        "application/json": {
-          schema: {
-            type: "object",
-          },
-        },
-        "text/plain": {
-          schema: {
-            type: "string",
-            default: "hello echo",
-          },
-        },
-        "multipart/form-data": {
-          schema: {
-            type: "object",
-            default: {
-              key1: "value1",
-              key2: "value2",
-            },
-          },
-        },
-        "application/x-www-form-urlencoded": {
-          schema: {
-            type: "object",
-            default: {
-              key1: "value1",
-              key2: "value2",
-            },
-          },
-        },
-      },
-      description: "post various data to the server",
-      required: false,
-    },
+rootRouter.openapi(
+  getDefaultRoute({
+    path: "/post",
+    method: "post",
+    requestDescription: "post various data to the server",
+    responseDescription: "200 OK",
+  }),
+  async (c) => {
+    return await getDefaultResponseBody(c);
   },
-  responses: {
-    200: {
-      content: {
-        "application/json": {
-          schema: {},
-        },
-        "text/html": {
-          schema: {},
-        },
-        "text/plain": {
-          schema: {},
-        },
-      },
-      description: "200 OK",
-    },
+);
+
+rootRouter.openapi(
+  getDefaultRoute({
+    path: "/get",
+    method: "get",
+    requestDescription: "get various data from the server",
+    responseDescription: "200 OK",
+  }),
+  (c) => {
+    return getDefaultResponseBody(c);
   },
-});
+);
 
-rootRouter.openapi(postRoute, async (c) => {
-  return await getDefaultResponseBody(c);
-});
+rootRouter.openapi(
+  getDefaultRoute({
+    path: "/put",
+    method: "put",
+    requestDescription: "put various data to the server",
+    responseDescription: "200 OK",
+  }),
+  (c) => {
+    return getDefaultResponseBody(c);
+  },
+);
 
-rootRouter.get("/get", (c) => {
-  return getDefaultResponseBody(c);
-});
+rootRouter.openapi(
+  getDefaultRoute({
+    path: "/delete",
+    method: "delete",
+    requestDescription: "delete various data from the server",
+    responseDescription: "200 OK",
+  }),
+  (c) => {
+    return getDefaultResponseBody(c);
+  },
+);
 
-rootRouter.put("/put", (c) => {
-  return getDefaultResponseBody(c);
-});
+rootRouter.openapi(
+  getDefaultRoute({
+    path: "/patch",
+    method: "patch",
+    requestDescription: "patch various data to the server",
+    responseDescription: "200 OK",
+  }),
+  (c) => {
+    return getDefaultResponseBody(c);
+  },
+);
 
-rootRouter.delete("/delete", (c) => {
-  return getDefaultResponseBody(c);
-});
-
-rootRouter.patch("/patch", (c) => {
-  return getDefaultResponseBody(c);
-});
-
-rootRouter.all("/headers", (c) => {
+rootRouter.get("/headers", (c) => {
   return c.json(c.req.header());
 });
 
